@@ -1,98 +1,78 @@
-@import url("https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400;600&display=swap");
-* {
-  font-family: "Source Sans Pro", sans-serif;
-  box-sizing: border-box;
+@import url('https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400&display=swap');
+*{
+    margin: auto;
 }
+body{
+    background-color: #54c3ef;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+form{
+    display: block;
+    font-family: Source, Sans, Pro;
+    width: 50%;
+    border-radius: 5px;
+    margin:auto;
+    padding: 20px;
+    background-color: #2b3252 !important;
+    color: #fad744;
+    line-height: 15px;
+}
+p{
+    font-size: 16px;
+    padding-bottom: 10px;
+    font-weight: 600;
+}
+.qClass{
+    padding: 10px;
+    line-height: 25px;
+}
+.labelClass, .choiceClass{
+    padding-left: 15px;
+}
+.choiceClass{
+    margin-left: 10px;
+}
+#qHead{
+    color: #fad744;
+    padding: 20px;
+    text-align: center;
+    font-size: 50px;
+    text-shadow: 2px 2px #000000;
+    font-weight: 600;
+    font-family: 'Caveat Brush', 'cursive';
+}
+.hrClass{
+    /* height: 1px; */
+    color:#fad744;
+    background-color: #fad744;
+    margin:5px ;
+}
+.scoreClass{
+    position:fixed;
+    height: 200px;
+    width:150px;
+    background-color: #ffffff;
+    top: 15vh;
+    right: 15vh;
+    font-weight: 400;
+    border-radius: 5px;
+    text-align: center;
 
-html,
-body {
-  margin: 0;
-  padding: 0;
 }
-
-h2 {
-  color: #fad744;
-  text-align: center;
-  text-transform: capitalize;
-  font-size: 80px;
-  font-family: "Caveat Brush", cursive;
-  text-shadow: 4px 4px 1px rgba(0, 0, 0, 0.6);
-  margin-bottom: 35px;
+.scoreClass h2{
+    padding: 20px;
+    font-size: 2em;
 }
-
-h3 {
-  color: #fad744;
-  font-size: 18px;
-  font-weight: 600;
+.scoreClass div{
+    font-size: 30px;
 }
-.flexcontainer {
-  display: flex;
-  justify-content: center;
-  padding-bottom: 80px;
-}
-.quizcontainer {
-  padding: 30px;
-  background-color: #2b3252;
-  width: 55%;
-  margin-left: 10%;
-  height: auto;
-  border-radius: 10px;
-}
-
-label {
-  color: #fad744;
-  margin-bottom: 40px;
-  font-weight: 400;
-  font-size: 16px;
-}
-hr {
-  border-color: #fad744;
-}
-input[type="radio"] {
-  margin-right: 8px;
-}
-
-input[type="submit"] {
-  background-color: #fad744;
-  padding: 10px 15px;
-  color: #2b3252;
-  font-size: 20px;
-  font-weight: 600;
-  box-shadow: none;
-  border-radius: 10px;
-  border: 2px solid transparent;
-  transition: 0.3s background-color ease-in, 0.2s border ease-in;
-}
-
-input[type="submit"]:hover {
-  cursor: pointer;
-  background-color: transparent;
-  color: #fad744;
-  border-color: #fad744;
-}
-input[type="submit"]:disabled,
-input[type="submit"][disabled] {
-  border: 1px solid #999999;
-  background-color: #cccccc;
-  color: #666666;
-}
-input[type="submit"]:disabled:hover,
-input[type="submit"][disabled]:hover {
-  cursor: not-allowed;
-}
-
-.scoreboard {
-  background-color: #fff;
-  width: 200px;
-  height: 300px;
-  position: sticky;
-  margin-left: 20px;
-  top: 20px;
-  padding: 30px;
-  border-radius: 10px;
-}
-h4 {
-  font-size: 30px;
-  font-weight: 600;
+.submitClass{
+    margin-left:35%;
+    margin-top: 20px;
+    padding: 15px;
+    width: 150px;
+    font-size: larger;
+    border-radius: 5px;
+    background-color: #fad744;
 }
