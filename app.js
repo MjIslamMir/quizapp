@@ -1,123 +1,103 @@
-const body = document.body;
-body.style.backgroundColor = "#54c3ef";
+//create a section for all contents
+const quizSection=document.createElement("section");
+quizSection.id="qSec";
+//create a heading for the sectio as The Quiz App
+const quizHead=document.createElement("h1");
+quizHead.id="qHead";
+quizHead.innerText="The Quiz App";
+quizSection.appendChild(quizHead);
 
-const quizHeading = document.createElement("h2");
-quizHeading.innerHTML = "The Quiz App";
-body.appendChild(quizHeading);
+//Create a form for the quiz
+const form=document.createElement("form");
+form.id="form"; 
 
-const flexContainer = document.createElement("div");
-flexContainer.classList.add("flexcontainer");
-body.appendChild(flexContainer);
-
-const quizContainer = document.createElement("div");
-quizContainer.classList.add("quizcontainer");
-flexContainer.appendChild(quizContainer);
-
-let score = 0;
-const checkItem = [];
-
-const scoreBoard = document.createElement("div");
-scoreBoard.classList.add("scoreboard");
-const scoreHeading = document.createElement("h4");
-scoreHeading.innerHTML = "Score:";
-scoreBoard.appendChild(scoreHeading);
-const scoreresult = document.createElement("h4");
-scoreresult.innerHTML = `${score} / 5`;
-scoreBoard.appendChild(scoreresult);
-flexContainer.appendChild(scoreBoard);
-
-const btn = document.createElement("input");
-
-let backendAns = [];
-
-const responseFetch = fetch("https://5d76bf96515d1a0014085cf9.mockapi.io/quiz");
-
-responseFetch
-  .then((res) => res.json())
-  .then((responseData) => {
-    // console.log(responseData);
-    const formContainer = document.createElement("form");
-    quizContainer.appendChild(formContainer);
-
-    responseData.map((item, i) => {
-      backendAns.push(item.options[item.answer - 1]);
-      const question = document.createElement("h3");
-      question.innerHTML = `Q${item.id}. ${item.question}`;
-      formContainer.appendChild(question);
-      // let answer = item.answer;
-
-      item.options.map((option, j) => {
-        const quizOptions = document.createElement("input");
-        quizOptions.value = option;
-        quizOptions.type = "radio";
-        quizOptions.required = true;
-        quizOptions.name = `option for question ${item.id}`;
-        quizOptions.id = option + i;
-        const quizLabel = document.createElement("label");
-        quizLabel.setAttribute("for", option + i);
-        quizLabel.innerText = option;
-        formContainer.appendChild(quizOptions);
-        formContainer.appendChild(quizLabel);
-        const br = document.createElement("br");
-        formContainer.appendChild(br);
-        const br2 = document.createElement("br");
-        formContainer.appendChild(br2);
-
-      });
-
-      const hr = document.createElement("hr");
-      const br = document.createElement("br");
-      formContainer.appendChild(br);
-      formContainer.appendChild(hr);
-      formContainer.appendChild(br);
-    });
-    // submit
-    const btnContainer = document.createElement("div");
-    btnContainer.style.textAlign = "center";
-    btn.type = "submit";
-    btnContainer.appendChild(btn);
-    formContainer.appendChild(btnContainer);
-
-    btn.addEventListener("click", function (e) {
-      e.preventDefault();
-      const selectedAnswer = document.getElementsByTagName("input");
-      const selectRadio = [];
-      const answerLength = selectedAnswer.length - 1;
-      for (i = 0; i < answerLength; i++) {
-        if (selectedAnswer[i].checked) {
-          selectRadio.push(selectedAnswer[i].value);
-        } else {
-          selectRadio.push("");
+function display(data){
+        console.log(data);
+        for(obj of data){
+            //create a div for eah question
+            const questionDiv=document.createElement("div");
+            questionDiv.className="qClass"
+            //destructure each object
+            let {id,answer,question,options} = obj; 
+            //question is the question to be answered
+            //id is id of question 
+            const que=document.createElement("p");
+            que.innerText=`Q${id}. ${question}`;
+            questionDiv.appendChild(que);
+            
+            //answer is the index of answer+1
+            
+            //options is the array of option for a question
+            options.forEach(function(opt, index){
+                const mcqChoice=document.createElement("input");
+                mcqChoice.type="radio";
+                mcqChoice.name=`question${id}`;
+                mcqChoice.value=index+1;
+                mcqChoice.id=`Q${id}${index+1}`;
+                mcqChoice.className="choiceClass";
+                const label=document.createElement("label");
+                label.htmlFor=`Q${id}${index+1}`;;
+                label.innerText=opt;
+                label.className="labelClass";
+                
+                questionDiv.appendChild(mcqChoice);
+                questionDiv.appendChild(label);
+                
+                const newLine=document.createElement("br");
+                questionDiv.appendChild(newLine);
+            })
+            const horizontalLine =document.createElement("hr");
+            horizontalLine.className="hrClass";
+            questionDiv.append(horizontalLine);
+            form.appendChild(questionDiv);
+            form.append(horizontalLine);
         }
-      }
+        const submit=document.createElement("input");
+        submit.type="submit";
+        submit.className="submitClass";
+        submit.innerText="Submit";
+        form.appendChild(submit);
+}
+const data = fetch("https://5d76bf96515d1a0014085cf9.mockapi.io/quiz/");
+data.then((response) => response.json()).then(display);
 
-      // get every questions' options
-      const chunkSize = 4;
-      let chunk;
-      var filtered;
-      for (let i = 0; i < selectRadio.length; i += chunkSize) {
-        chunk = selectRadio.slice(i, i + chunkSize);
-        filtered = chunk.filter(function (el) {
-          return el != "";
-        });
-        filtered = filtered.toString();
-        checkItem.push(filtered);
-      }
-      // console.log("selected answers", checkItem);
+quizSection.appendChild(form);
 
-      // checking selected answers with correct backend answers
-      for (let i = 0; i < backendAns.length; i++) {
-        if (backendAns[i] === checkItem[i]) {
-          score++; // increasing count if answer is correct
+document.body.appendChild(quizSection);
+
+let score=0;
+const scoreBoard=document.createElement("div");
+scoreBoard.className="scoreClass";
+const scoreBoardheading=document.createElement("h2");
+scoreBoardheading.innerText="Score";
+scoreBoard.appendChild(scoreBoardheading);
+const scoreNode=document.createElement("div");
+scoreNode.innerText=`${score}/5`;
+scoreBoard.appendChild(scoreNode);
+document.body.appendChild(scoreBoard);
+
+
+
+function logSubmit(event) {
+    const radioBtns = document.querySelectorAll("input[type='radio']");
+    event.preventDefault();
+    radioBtns.forEach((radios)=>console.log(radios));
+    for(radios of radioBtns)
+    {
+        if(radios.checked)
+        {
+            if ((radios.name=="question1"&&radios.value==3)||(radios.name=="question2"&&radios.value==1)||(radios.name=="question3"&&radios.value==3)||(radios.name=="question4"&&radios.value==3)||(radios.name=="question5"&&radios.value==2))
+            {
+                score++;
+            }
         }
-      }
-      // console.log("score", score);
-      scoreresult.innerHTML = `${score} / 5`;
+    }
+    scoreNode.innerText=`${score}/5`;
+    console.log(score);
+    score=0;
+  }
+  
 
-      btn.disabled = true;
-    });
-    // console.log("backend answers", backendAns);
-  })
-  .catch(() => {
-    window.alert("Please try again");
-  });
+const log = document.getElementById('form');
+form.addEventListener('submit', logSubmit);
+
